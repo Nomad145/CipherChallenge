@@ -1,0 +1,9 @@
+language: php
+php:
+    - '7.1'
+before_script:
+    - composer install -n
+script:
+    - phpunit
+after_script:
+    - bash <(curl -s https://codecov.io/bash)
