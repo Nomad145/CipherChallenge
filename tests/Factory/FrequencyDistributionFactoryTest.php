@@ -4,7 +4,7 @@ namespace App\Tests\Factory;
 
 use PHPUnit\Framework\TestCase;
 use App\Factory\FrequencyDistributionFactory;
-use App\FrequencyDistribution;
+use App\Analysis\FrequencyDistribution;
 
 /**
  * @author Michael Phillips <michaeljoelphillips@gmail.com>

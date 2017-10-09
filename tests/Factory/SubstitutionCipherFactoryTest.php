@@ -4,8 +4,8 @@ namespace App\Tests\Factory;
 
 use PHPUnit\Framework\TestCase;
 use App\Factory\SubstitutionCipherFactory;
-use App\FrequencyDistribution;
 use App\Cipher\SubstitutionCipher;
+use App\Analysis\FrequencyDistribution;
 
 /**
  * @author Michael Phillips <michaeljoelphillips@gmail.com>

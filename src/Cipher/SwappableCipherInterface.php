@@ -10,8 +10,10 @@ use App\Cipher\CipherInterface;
 interface SwappableCipherInterface extends CipherInterface
 {
     /**
-     * @param string
-     * @param string
+     * Swaps two characters within a cipher.
+     *
+     * @param string $a
+     * @param string $b
      * @return void
      */
     public function swap(string $a, string $b) : SwappableCipherInterface;

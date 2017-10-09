@@ -3,7 +3,7 @@
 namespace App\Factory;
 
 use App\Cipher\SubstitutionCipher;
-use App\FrequencyDistribution;
+use App\Analysis\FrequencyDistribution;
 
 /**
  * @author Michael Phillips <michaeljoelphillips@gmail.com>

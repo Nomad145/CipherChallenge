@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Analysis;
 
 /**
  * @author Michael Phillips <michaeljoelphillips@gmail.com>
@@ -44,12 +44,11 @@ class FrequencyDistribution
     }
 
     /**
-     * @param string
      * @return array
      */
-    protected function calculateDistribution(array $text) : array
+    protected function calculateDistribution(array $tokens) : array
     {
-        $distribution = array_count_values($text);
+        $distribution = array_count_values($tokens);
 
         array_walk(
             $distribution,

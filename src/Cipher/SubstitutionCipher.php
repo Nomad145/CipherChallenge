@@ -44,6 +44,9 @@ class SubstitutionCipher implements SwappableCipherInterface
         return strtr(strtolower($message), array_flip($this->map));
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function swap(string $a, string $b) : SwappableCipherInterface
     {
         $val = $this->map[$a];

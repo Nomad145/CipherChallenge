@@ -1,6 +1,7 @@
 FROM php:7.1-fpm
 
 COPY conf/xdebug.ini /usr/local/etc/php/conf.d/docker-php-pecl-xdebug.ini
+COPY conf/php.ini /usr/local/etc/php/conf.d/php.ini
 
 RUN apt-get update -y && apt-get install -y zlib1g-dev \
     && docker-php-ext-install zip

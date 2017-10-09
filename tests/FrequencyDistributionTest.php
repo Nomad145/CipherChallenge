@@ -3,8 +3,8 @@
 namespace App\Tests;
 
 use PHPUnit\Framework\TestCase;
-use App\FrequencyDistribution;
 use App\Tokenizer\CharacterTokenizer;
+use App\Analysis\FrequencyDistribution;
 
 /**
  * @author Michael Phillips <michaeljoelphillips@gmail.com>

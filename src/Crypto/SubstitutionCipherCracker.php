@@ -5,15 +5,38 @@ namespace App\Crypto;
 use App\Tokenizer\TokenizerInterface;
 use App\Factory\FrequencyDistributionFactory;
 use App\Factory\SubstitutionCipherFactory;
-use App\FrequencyDistribution;
+use App\Analysis\FrequencyDistribution;
 use App\Smoother\SmootherInterface;
 use App\Cipher\CipherInterface;
+use App\Crypto\CipherCrackerInterface;
 
 /**
  * @author Michael Phillips <michaeljoelphillips@gmail.com>
  */
-class SubstitutionCipherCracker
+class SubstitutionCipherCracker implements CipherCrackerInterface
 {
+    /** @var TokenizerInterface */
+    protected $tokenizer;
+
+    /** @var FrequencyDistributionFactory */
+    protected $frequencyDistributionFactory;
+
+    /** @var SubstitutionCipherFactory */
+    protected $cipherFactory;
+
+    /** @var FrequencyDistribution */
+    protected $sourceDistribution;
+
+    /** @var SmootherInterface */
+    protected $smoother;
+
+    /**
+     * @param TokenizerInterface $tokenizer
+     * @param FrequencyDistributionFactory $frequencyDistributionFactory
+     * @param SubstitutionCipherFactory $cipherFactory
+     * @param FrequencyDistribution $sourceDistribution
+     * @param SmootherInterface $smoother
+     */
     public function __construct(
         TokenizerInterface $tokenizer,
         FrequencyDistributionFactory $frequencyDistributionFactory,
@@ -28,6 +51,9 @@ class SubstitutionCipherCracker
         $this->smoother = $smoother;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function crack(string $cipherText) : CipherInterface
     {
         $tokens = $this->tokenizer->tokenize($cipherText);
@@ -36,8 +62,8 @@ class SubstitutionCipherCracker
             ->frequencyDistributionFactory
             ->withTokens($tokens);
 
-        // The cipher built only using FrequencyDistributions of the source
-        // text and the cipher text.
+        // Build a cipher from the source distribution and the ciphertext
+        // distribution.
         $cipher = $this
             ->cipherFactory
             ->withFrequencyDistributions(

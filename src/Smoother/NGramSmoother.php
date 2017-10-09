@@ -2,7 +2,7 @@
 
 namespace App\Smoother;
 
-use App\FrequencyDistribution;
+use App\Analysis\FrequencyDistribution;
 use App\Cipher\SwappableCipherInterface;
 use App\Factory\FrequencyDistributionFactory;
 use App\Tokenizer\TokenizerInterface;
@@ -17,14 +17,14 @@ use App\Cipher\CipherInterface;
 class NGramSmoother implements SmootherInterface
 {
     /**
-     * The allowed frequency variance of two ngrams being compared.
+     * The acceptable frequency variance of two ngrams being compared.
      *
      * @const float
      */
     protected const FREQUENCY_VARIANCE = 0.06;
 
     /**
-     * The base frequency distribution to compare with the cipher text.
+     * The source frequency distribution to compare with the cipher text.
      *
      * @var FrequencyDistribution
      */
@@ -56,7 +56,7 @@ class NGramSmoother implements SmootherInterface
      */
     public function smooth(SwappableCipherInterface $cipher, string $text) : SwappableCipherInterface
     {
-        // The frequency distribution of the deciphered text with $cipher.
+        // The distribution of the deciphered text.
         $textDistribution = $this->buildDistribution($cipher, $text);
 
         /** @var array */
@@ -81,6 +81,8 @@ class NGramSmoother implements SmootherInterface
                     $newCipher->decipher($text)
                 );
 
+                // If the fitness of the text is higher than that of previous
+                // iterations, accept the changes to the current cipher.
                 if ($newFitness > $fitness) {
                     $cipher = $newCipher;
                     $fitness = $newFitness;
@@ -126,7 +128,8 @@ class NGramSmoother implements SmootherInterface
         // Find intersections between the distributions that have a frequency
         // variance less than or equal to self::FREQUENCY_VARIANCE.  The
         // resulting array should contain ngrams that match the source text by
-        // 94% or higher.
+        // 94% or higher.  The lower the FREQUENCY_VARIANCE, the lower the
+        // change of getting false positives.
         $common = array_uintersect_assoc(
             $this->sourceDistribution->getDistribution(),
             $textDistribution->getDistribution(),
@@ -152,9 +155,9 @@ class NGramSmoother implements SmootherInterface
             )
         );
 
-        // Diff the correct list with the full alphabet.  The remaining characters
-        // are characters that need smoothing.  The size of this list depends
-        // entirely on the similarity of the freqency distributions of the
+        // Diff the correct list with the full alphabet.  The remaining
+        // characters are characters that need smoothing.  The size of this
+        // list depends on the similarity of the freqency distributions of the
         // source and the cipher text.
         //
         // Call `array_values` to re-index the keys.
