@@ -7,4 +7,4 @@ use Silex\Provider\MonologServiceProvider;
 $app['twig.path'] = array(__DIR__.'/../templates');
 $app['twig.options'] = array('cache' => __DIR__.'/../var/cache/twig');
 
-$app['crypto.source_path'] = '/app/.ideas/resources/plain.txt';
+$app['crypto.source_path'] = __DIR__.'/../includes/plain.txt';
