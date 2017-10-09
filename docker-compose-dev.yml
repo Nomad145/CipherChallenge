@@ -1,0 +1,15 @@
+# Docker Compose file for OSX enabling Docker Sync.  Requires docker-sync and docker-sync.yml.
+
+version: "2"
+services:
+    php:
+        volumes:
+            - cipher-sync:/app:nocopy
+
+    nginx:
+        volumes:
+            - cipher-sync:/app:nocopy
+
+volumes:
+    cipher-sync:
+        external: true

@@ -1,0 +1,5 @@
+.ideas/
+.phpcd/
+vendor/
+coverage.xml
+tags
