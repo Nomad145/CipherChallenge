@@ -1,4 +1,4 @@
-# Crypto Challenge
+# Cipher Challenge
 This repository provides a solution for the Cipher Challenge as both a command and a web interface.
 
 ## Getting Started
